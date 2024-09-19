@@ -20,15 +20,28 @@ pessoasTurma = [
   "Sofia",
 ];
 
+duplasTurma = [
+  ["Carlos", "Murilo"],
+  ["Vetoreti", "Inaldo"],
+  ["Fernanda", "Guibs"],
+  ["Gabriel", "Gabrieli"],
+  ["Giovana", "Lanzoni"],
+  ["Heitor", "Natalia"],
+  ["Leonardo", "Melissa"],
+  ["Letícia", "Neife"],
+  ["Luca", "Olivia"],
+  ["Sofia"],
+];
+
 const mesas = 5;
 
 const data = new Date().toLocaleDateString();
 document.getElementById("data").innerHTML = data;
 
-function distribuirPesssoas() {
-  let pessoasEmbaralhadas = pessoasTurma.sort(() => 0.5 - Math.random());
-  let pessoasMesa = Math.floor(pessoasTurma.length / mesas);
-  let resto = pessoasTurma.length % mesas;
+function distribuirPessoas(pessoas) {
+  let pessoasEmbaralhadas = pessoas.sort(() => 0.5 - Math.random());
+  let pessoasMesa = Math.floor(pessoas.length / mesas);
+  let resto = pessoas.length % mesas;
 
   let distribuicao = [];
   let inicio = 0;
@@ -42,8 +55,22 @@ function distribuirPesssoas() {
   return distribuicao;
 }
 
-document.getElementById("distribuidor").addEventListener("click", () => {
-  const data = distribuirPesssoas();
+document.getElementById("distribuidorD").addEventListener("click", () => {
+  const data = distribuirPessoas(duplasTurma);
+  const tablesContainer = document.getElementById("tablesContainer");
+  tablesContainer.innerHTML = "";
+  data.forEach((table, index) => {
+    const tableDiv = document.createElement("div");
+    tableDiv.className = "table";
+    tableDiv.innerHTML =
+      `<h2>Mesa ${index + 1}</h2>` +
+      table.map((person) => `<p>${person.join("<br>")}</p>`).join("");
+    tablesContainer.append(tableDiv);
+  });
+});
+
+document.getElementById("distribuidorA").addEventListener("click", () => {
+  const data = distribuirPessoas(pessoasTurma);
   const tablesContainer = document.getElementById("tablesContainer");
   tablesContainer.innerHTML = "";
   data.forEach((table, index) => {
